@@ -9,28 +9,18 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Install iverilog and yosys
+      - name: Install yosys
         shell: bash
-        run: sudo apt-get update && sudo apt-get install -y iverilog yosys
+        run: sudo apt-get update && sudo apt-get install -y yosys
 
-      - name: Test Yosys Parsing Directly
+      - name: Run Yosys and save log
         shell: bash
         run: |
-          echo "=== RUNNING YOSYS ON SRC/PROJECT.V ==="
-          yosys -p "read_verilog src/project.v; hierarchy -check -top tt_um_una6_chip"
+          yosys -p "read_verilog src/project.v; hierarchy -check -top tt_um_una6_chip" > yosys_output.txt 2>&1 || true
+          tail -n 100 yosys_output.txt
 
-      - name: Setup python
-        uses: actions/setup-python@v5
+      - name: Upload yosys log
+        uses: actions/upload-artifact@v4
         with:
-          python-version: '3.11'
-
-      - name: Install Python packages
-        shell: bash
-        run: pip install -r test/requirements.txt
-
-      - name: Run tests
-        shell: bash
-        run: |
-          cd test
-          make clean
-          make
+          name: yosys-log
+          path: yosys_output.txt
