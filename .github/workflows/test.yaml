@@ -13,14 +13,9 @@ jobs:
         shell: bash
         run: sudo apt-get update && sudo apt-get install -y yosys
 
-      - name: Run Yosys and save log
+      - name: Print Yosys Error Directly
         shell: bash
         run: |
-          yosys -p "read_verilog src/project.v; hierarchy -check -top tt_um_una6_chip" > yosys_output.txt 2>&1 || true
-          tail -n 100 yosys_output.txt
-
-      - name: Upload yosys log
-        uses: actions/upload-artifact@v4
-        with:
-          name: yosys-log
-          path: yosys_output.txt
+          yosys -p "read_verilog src/project.v; hierarchy -check -top tt_um_una6_chip" 2>&1 | grep -B 2 -A 5 -i "error" || true
+          echo "=== FIRST 50 LINES OF YOSYS ==="
+          yosys -p "read_verilog src/project.v; hierarchy -check -top tt_um_una6_chip" 2>&1 | head -n 50
