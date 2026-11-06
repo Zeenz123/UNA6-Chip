@@ -9,11 +9,16 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Install iverilog
+      - name: Install iverilog and yosys
         shell: bash
-        run: sudo apt-get update && sudo apt-get install -y iverilog
+        run: sudo apt-get update && sudo apt-get install -y iverilog yosys
 
-      # Set Python up and install cocotb
+      - name: Test Yosys Parsing Directly
+        shell: bash
+        run: |
+          echo "=== RUNNING YOSYS ON SRC/PROJECT.V ==="
+          yosys -p "read_verilog src/project.v; hierarchy -check -top tt_um_una6_chip"
+
       - name: Setup python
         uses: actions/setup-python@v5
         with:
@@ -28,18 +33,4 @@ jobs:
         run: |
           cd test
           make clean
-          echo "=== RUNNING IVERILOG / COCOTB MAKE ==="
-          make || true
-          echo "=== MAKE FINISHED ==="
-          ls -la
-          if [ -f results.xml ]; then
-            cat results.xml
-          else
-            echo "results.xml was not created!"
-          fi
-
-      - name: Test Summary
-        uses: test-summary/action@v2.3
-        with:
-          paths: "test/results.xml"
-        if: always()
+          make
