@@ -6398,7 +6398,7 @@ module LogisimCounter( clear,
          s_nextCounterValue = s_counterValue - 1;
    end
 
-   always @(posedge clock or posedge clear)
+   always @(posedge clock)
    begin
       if (clear) s_counterValue <= 0;
       else if (s_realEnable) s_counterValue <= s_nextCounterValue;
@@ -6770,9 +6770,7 @@ module REGISTER_FLIP_FLOP( clock,
    assign q = s_currentState;
    assign s_clock = invertClock == 0 ? clock : ~clock;
 
-   always @(posedge clock or posedge reset)
-   begin
-      if (reset) s_currentState <= 0;
+   always @(posedge clock) begin if (reset) s_currentState <= 0;
       else if (clockEnable&tick) s_currentState <= d;
    end
 
@@ -6990,8 +6988,7 @@ module SHIFTREG_18_Classic( D0,
    *******************************************************************************/
    assign s_clock = (negateClock == 0) ? clock : ~clock;
 
-   always @(posedge clock or posedge reset)
-     begin
+   always @(posedge clock) begin
          s_stageReg0 <= (reset == 1'b1) ? 0 : (tick == 1'b1) ? s_stageNext0 : s_stageReg0;
          s_stageReg1 <= (reset == 1'b1) ? 0 : (tick == 1'b1) ? s_stageNext1 : s_stageReg1;
          s_stageReg2 <= (reset == 1'b1) ? 0 : (tick == 1'b1) ? s_stageNext2 : s_stageReg2;
@@ -7106,8 +7103,7 @@ module SHIFTREG_3_Classic( D0,
    *******************************************************************************/
    assign s_clock = (negateClock == 0) ? clock : ~clock;
 
-   always @(posedge clock or posedge reset)
-     begin
+   always @(posedge clock) begin
          s_stageReg0 <= (reset == 1'b1) ? 0 : (tick == 1'b1) ? s_stageNext0 : s_stageReg0;
          s_stageReg1 <= (reset == 1'b1) ? 0 : (tick == 1'b1) ? s_stageNext1 : s_stageReg1;
          s_stageReg2 <= (reset == 1'b1) ? 0 : (tick == 1'b1) ? s_stageNext2 : s_stageReg2;
