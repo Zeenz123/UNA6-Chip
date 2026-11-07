@@ -18,14 +18,12 @@ jobs:
         with:
           flow: openlane2
 
-      - name: Print Synthesis Error Log
+      - name: Print OpenLane Error Summary
         if: failure()
         shell: bash
         run: |
-          echo "=== 05-YOSYS-JSONHEADER / SYNTHESIS LOGS ==="
-          find runs/ -name "*yosys*" -exec cat {} + | grep -B 5 -A 20 -i "error" || true
-          echo "=== LATEST 60 LINES OF OPENLANE LOG ==="
-          find runs/ -name "openlane.log" -exec tail -n 60 {} + || true
+          echo "=== SEARCHING ERRORS IN ALL LOGS ==="
+          grep -rn -E "\[ERROR|ERROR:|[A-Z]{3,4}-[0-9]{4}" runs/wokwi/ || true
 
   precheck:
     needs: gds
