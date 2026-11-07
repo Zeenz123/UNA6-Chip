@@ -6398,7 +6398,7 @@ module LogisimCounter( clear,
          s_nextCounterValue = s_counterValue - 1;
    end
 
-   always @(posedge s_clock or posedge clear)
+   always @(posedge clock or posedge clear)
    begin
       if (clear) s_counterValue <= 0;
       else if (s_realEnable) s_counterValue <= s_nextCounterValue;
@@ -6640,8 +6640,7 @@ module RAMCONTENTS_RAM_1( address,
    always @(posedge clock)
      if (s_ramWe == 1'b1) s_memContents[s_ramWriteAddress] <= s_ramDataIn;
 
-   always @(negedge clock)
-     s_ramDataOut <= s_memContents[s_ramReadAddress];
+   always @(posedge clock) s_ramDataOut <= s_memContents[s_ramReadAddress];
 
    /*******************************************************************************
    ** The input registers are defined here                                       **
@@ -6771,7 +6770,7 @@ module REGISTER_FLIP_FLOP( clock,
    assign q = s_currentState;
    assign s_clock = invertClock == 0 ? clock : ~clock;
 
-   always @(posedge s_clock or posedge reset)
+   always @(posedge clock or posedge reset)
    begin
       if (reset) s_currentState <= 0;
       else if (clockEnable&tick) s_currentState <= d;
@@ -6991,7 +6990,7 @@ module SHIFTREG_18_Classic( D0,
    *******************************************************************************/
    assign s_clock = (negateClock == 0) ? clock : ~clock;
 
-   always @(posedge s_clock or posedge reset)
+   always @(posedge clock or posedge reset)
      begin
          s_stageReg0 <= (reset == 1'b1) ? 0 : (tick == 1'b1) ? s_stageNext0 : s_stageReg0;
          s_stageReg1 <= (reset == 1'b1) ? 0 : (tick == 1'b1) ? s_stageNext1 : s_stageReg1;
@@ -7107,7 +7106,7 @@ module SHIFTREG_3_Classic( D0,
    *******************************************************************************/
    assign s_clock = (negateClock == 0) ? clock : ~clock;
 
-   always @(posedge s_clock or posedge reset)
+   always @(posedge clock or posedge reset)
      begin
          s_stageReg0 <= (reset == 1'b1) ? 0 : (tick == 1'b1) ? s_stageNext0 : s_stageReg0;
          s_stageReg1 <= (reset == 1'b1) ? 0 : (tick == 1'b1) ? s_stageNext1 : s_stageReg1;
@@ -7196,7 +7195,7 @@ module S_R_FLIPFLOP( clock,
    /*******************************************************************************
    ** Here the actual state register is defined                                  **
    *******************************************************************************/
-   always @(posedge s_clock)
+   always @(posedge clock)
    begin
       if (reset) s_currentState <= 1'b0;
       else if (preset) s_currentState <= 1'b1;
