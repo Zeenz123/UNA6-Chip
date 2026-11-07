@@ -1,4 +1,4 @@
-﻿name: gds
+name: gds
 
 on:
   push:
@@ -13,17 +13,20 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Debug Verilog Syntax with Iverilog
-        shell: bash
-        run: |
-          sudo apt-get update && sudo apt-get install -y iverilog
-          echo "=== CHECKING VERILOG SYNTAX ==="
-          iverilog -g2012 -o /dev/null src/project.v || true
-
       - name: Build GDS
         uses: TinyTapeout/tt-gds-action@tt10
         with:
           flow: openlane2
+
+      - name: Print GDS Failure Logs
+        if: failure()
+        shell: bash
+        run: |
+          echo "=== SEARCHING OPENLANE LOGS ==="
+          find runs/ -name "*.log" -exec grep -H -i "error" {} + | head -n 40 || true
+          echo "=== SEARCHING WORKFLOW LOGS ==="
+          ls -la
+          ls -la runs/ || true
 
   precheck:
     needs: gds
