@@ -13,9 +13,9 @@ jobs:
         shell: bash
         run: sudo apt-get update && sudo apt-get install -y yosys
 
-      - name: Print Yosys Error Directly
+      - name: Print Modules Parsed by Yosys
         shell: bash
         run: |
-          yosys -p "read_verilog src/project.v; hierarchy -check -top tt_um_una6_chip" 2>&1 | grep -B 2 -A 5 -i "error" || true
-          echo "=== FIRST 50 LINES OF YOSYS ==="
-          yosys -p "read_verilog src/project.v; hierarchy -check -top tt_um_una6_chip" 2>&1 | head -n 50
+          echo "=== DUMPING YOSYS LOG ==="
+          yosys -p "read_verilog src/project.v; tee -o parsed_modules.txt ls"
+          cat parsed_modules.txt
