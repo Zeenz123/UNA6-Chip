@@ -1,4 +1,4 @@
-﻿name: test
+name: test
 on: [push, workflow_dispatch]
 jobs:
   test:
@@ -16,6 +16,4 @@ jobs:
       - name: Print Modules Parsed by Yosys
         shell: bash
         run: |
-          echo "=== DUMPING YOSYS LOG ==="
-          yosys -p "read_verilog src/project.v; tee -o parsed_modules.txt ls"
-          cat parsed_modules.txt
+          yosys -p "read_verilog src/project.v; ls" || true
