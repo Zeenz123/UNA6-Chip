@@ -7,9 +7,14 @@
   "PL_RESIZER_HOLD_SLACK_MARGIN": 0.05,
   "GRT_RESIZER_HOLD_SLACK_MARGIN": 0.02,
   "GLB_RESIZER_HOLD_SLACK_MARGIN": 0.02,
-  "QUIT_ON_HOLD_VIOLATIONS": 0,
-  "QUIT_ON_SETUP_VIOLATIONS": 0,
-  "QUIT_ON_TIMING_VIOLATIONS": 0,
+  "TIMING_VIOLATION_CORNERS": [],
+  "TIMING_VIOLATIONS_CORNERS": [],
+  "meta": {
+    "substituting_steps": {
+      "Checker.HoldViolations": null,
+      "Checker.SetupViolations": null
+    }
+  },
   "RUN_LINTER": 1,
   "LINTER_INCLUDE_PDK_MODELS": 1,
   "CLOCK_PORT": "clk",
