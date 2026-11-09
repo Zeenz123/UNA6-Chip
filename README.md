@@ -8,7 +8,7 @@ This repository packages the design for silicon fabrication on the **SkyWater 13
 
 ---
 
-## 3D Interactive Silicon Layout & Viewer
+## 3D Interactive Silicon Layout & Viewer 
 
 Explore the complete multi-layer metal stack, cell placement, and power routing in 3D:
 
