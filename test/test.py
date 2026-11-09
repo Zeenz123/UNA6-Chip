@@ -1,4 +1,4 @@
-﻿# SPDX-FileCopyrightText: © 2024 Tiny Tapeout
+# SPDX-FileCopyrightText: © 2024 Tiny Tapeout
 # SPDX-License-Identifier: Apache-2.0
 
 import cocotb
@@ -11,7 +11,7 @@ async def test_project(dut):
     dut._log.info("Starting UNA-6 Core Verification Test")
 
     # 10us period (100 KHz clock)
-    clock = Clock(dut.clk, 10, unit="us")
+    clock = Clock(dut.clk, 10, units="us")
     cocotb.start_soon(clock.start())
 
     # Apply Reset
