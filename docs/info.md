@@ -1,7 +1,9 @@
-﻿# UNA-6 Custom Microprocessor & Graphics Processing Unit
+# UNA-6 Custom Microprocessor & Graphics Processing Unit
 
 ## Overview
 The **UNA-6** is an 8-bit monolithic computing architecture featuring an integrated CPU instruction execution core alongside hardware coprocessors. Designed for real-time calculation and 2D/3D projection, the design integrates dedicated sub-circuits for geometric operations, hardware circle and triangle rasterization, signed 16-bit division, trigonometric calculation, and Bresenham line stepping.
+
+![UNA-6 Silicon Layout (SkyWater 130nm 2x2 Tile)](una6_chip_layout.jpg)
 
 This implementation targets the SkyWater 130nm process through the Tiny Tapeout ASIC flow.
 

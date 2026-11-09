@@ -10,6 +10,8 @@ This repository packages the design for silicon fabrication on the **SkyWater 13
 
 ## 3D Interactive Silicon Layout & Viewer 
 
+![UNA-6 Silicon Layout (SkyWater 130nm 2x2 Tile)](docs/una6_chip_layout.jpg)
+
 Explore the complete multi-layer metal stack, cell placement, and power routing in 3D:
 
 👉 **[Launch Interactive 3D GDS Viewer](https://zeenz123.github.io/UNA6-Chip/)**  
