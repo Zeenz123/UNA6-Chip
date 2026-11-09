@@ -13,6 +13,18 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Pre-fetch Sky130 PDK with retry
+        shell: bash
+        run: |
+          echo "=== Pre-fetching Sky130 PDK to prevent Volare ReadTimeout ==="
+          pip install --upgrade volare
+          # Retry up to 5 times if GitHub releases throttles or drops connection
+          for i in {1..5}; do
+            echo "Attempt $i to fetch PDK..."
+            volare enable --pdk sky130 0fe599b2afb6708d281543108caf8310912f54af && break || sleep 10
+          done
+          echo "PDK pre-fetch completed."
+
       - name: Build GDS
         uses: TinyTapeout/tt-gds-action@tt10
         with:
